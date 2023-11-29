@@ -4,7 +4,13 @@ let userInfo =
     { "id": 1992, 
     "username": "Tkim"}
 
+
+
+    let user = 
+        {"id":1, "username":"pouros"}
+    
 let currentBook
+
 fetch('http://127.0.0.1:3000/books')
     .then(resp => resp.json())
     .then(bookArray => {
@@ -12,7 +18,7 @@ fetch('http://127.0.0.1:3000/books')
             displayTitle(book)
         })
     })
-
+//helper function to be used in forEach loop to display each book title on side bar
 function displayTitle(book){
     const liElement = document.createElement('li')
     liElement.textContent = book.title
@@ -22,14 +28,10 @@ function displayTitle(book){
         displayDetail(book)
     })
 }
-//when user click liELement, display image, description, users who lied book and append to show panel div
-// create element first then set text content
-
-
-
+//helper function to be used in event handler above. function produces elements, set attrubutes based on fetched data
 function displayDetail(book){
         currentBook = book
-        showPanelElement.innerHTML = ' '
+        showPanelElement.innerHTML = ' '// other wise, each details of book gets appended to bottom 
 
         const imgELement = document.createElement('img')
         const titleElement = document.createElement('h2')
@@ -42,29 +44,25 @@ function displayDetail(book){
         likeButtonElement.textContent = 'LIKE'
         showPanelElement.append(imgELement, titleElement, descriptionELement, ulForLiElement, likeButtonElement)
 
-        currentBook.users.map(user => {
+        currentBook.users.forEach(user => {   //map or forEach works. there are multiple users who liked single book. need to iterate thrhough
             const userLikedElement = document.createElement('li')
             userLikedElement.textContent = user.username
-            console.log(user.username)
             ulForLiElement.appendChild(userLikedElement)
                 })
 
-
          likeButtonElement.addEventListener('click', ()=> {
-            const userLikedElement = document.createElement('li')
-
-            userLikedElement.innerHTML = ' '
-            currentBook.users.push(userInfo)    
-            currentBook.users.forEach( user =>{
+            const userLikedElement = document.createElement('li')  //create if outside of forEach loop. If made in side,
+            currentBook.users.push(user)                       //existing li's are added on top
+            currentBook.users.forEach( user =>{                     //
                 userLikedElement.textContent = user.username
                 ulForLiElement.appendChild(userLikedElement)
             })
         })
-}
+}  
 
 
 
-
+    
 
 
 
