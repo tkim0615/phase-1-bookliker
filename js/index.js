@@ -10,7 +10,6 @@ fetch('http://127.0.0.1:2000/books')
         renderTitle(book)
     })
     })
-
 //render functions
 function renderTitle(book){
     const li = document.createElement('li')
@@ -57,6 +56,7 @@ function renderTitle(book){
             )
             .then(resp => resp.json())
             .then(updatedUserLikes => {
+                console.log(updatedUserLikes)
                 const updatedUserArray = updatedUserLikes.users
                 updatedUserArray.forEach(user => {
                 const liForNewUser = document.createElement('li')
@@ -64,14 +64,8 @@ function renderTitle(book){
                 ulELement.appendChild(liForNewUser)
            })
             })
-
         })
     
-    
-    
-    })
-
-
-    
+    }) 
 }
 
